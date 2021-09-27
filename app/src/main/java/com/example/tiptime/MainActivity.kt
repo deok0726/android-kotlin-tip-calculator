@@ -7,7 +7,7 @@ import java.text.NumberFormat
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +19,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun calculateTip() {
         val stringInTextField = binding.costOfService.text.toString()
-        val cost = stringInTextField.toDouble()
+        val cost = stringInTextField.toDoubleOrNull()
+        if (cost == null) {
+            binding.tipResult.text = ""
+            return
+        }
 
         val tipPercentage = when (binding.tipOptions.checkedRadioButtonId) {
             R.id.option_twenty_percent -> 0.20
